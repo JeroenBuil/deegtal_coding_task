@@ -8,12 +8,12 @@ This repo stores the code and findings for the modeling task assigned to me for 
 
 ## How to run:
 1. Create python 3.12 environment (this code has been tested with 3.12.7)
-    - ```powershell python -m venv .venv
+    - ```python -m venv .venv```
 2. Activate environment
-    - ```powershell venv\Scripts\activate
+    - ```venv\Scripts\activate```
 3. Install requirements.txt
-    - ```powershell pip install -r requirements.txt
-4. Run notebook in /notebooks in order!
+    - ```pip install -r requirements.txt```
+4. Run notebook in /notebooks in order (as files are generated that are needed in later notebooks)!
     - 1_Exploratory_Data_Analysis.ipynb
     - 2_1_Build_CNN_Model.ipynb
     - 3_XAI.ipynb
