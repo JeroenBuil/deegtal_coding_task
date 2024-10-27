@@ -2,6 +2,9 @@
 /data/*
 !/data/raw/
 
+# Figures
+/reports/figures/
+
 # Mac OS-specific storage files
 .DS_Store
 

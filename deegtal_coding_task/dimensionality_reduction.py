@@ -93,16 +93,12 @@ def get_tsne_df(
     embedding = tsne.fit(x)
 
     # Bundle everything in a df
-    df_tsne = bundle_components_and_labels_into_df(
-        labels=df[labels], components=embedding
-    )
+    df_tsne = bundle_components_and_labels_into_df(labels=df[labels], components=embedding)
 
     return df_tsne, embedding
 
 
-def tsne_transform(
-    df: pd.DataFrame, labels: str | list, embedding: TSNE
-) -> pd.DataFrame:
+def tsne_transform(df: pd.DataFrame, labels: str | list, embedding: TSNE) -> pd.DataFrame:
     """Transforms new data points in the same tSNE space as that of the datapoints the embedding object was fitted with. Returns an easy to plot dataframe
 
     Args:
@@ -121,9 +117,7 @@ def tsne_transform(
     embedded_x = embedding.transform(x)
 
     # Bundle everything in a df
-    df_tsne = bundle_components_and_labels_into_df(
-        labels=df[labels], components=embedded_x
-    )
+    df_tsne = bundle_components_and_labels_into_df(labels=df[labels], components=embedded_x)
 
     return df_tsne
 
@@ -166,9 +160,7 @@ def get_pca_df(
     embedding = pca.fit_transform(x)
 
     # Bundle everything in a df
-    df_pca = bundle_components_and_labels_into_df(
-        labels=df[labels], components=embedding
-    )
+    df_pca = bundle_components_and_labels_into_df(labels=df[labels], components=embedding)
 
     return df_pca, pca
 
@@ -191,9 +183,7 @@ def pca_transform(df: pd.DataFrame, labels: str | list, embedding: PCA) -> pd.Da
     embedded_x = embedding.transform(x)
 
     # Bundle everything in a df
-    df_pca = bundle_components_and_labels_into_df(
-        labels=df[labels], components=embedded_x
-    )
+    df_pca = bundle_components_and_labels_into_df(labels=df[labels], components=embedded_x)
 
     return df_pca
 
@@ -254,16 +244,12 @@ def get_umap_df(
     embedding = reducer.fit_transform(x)
 
     # Bundle everything in a df
-    df_umap = bundle_components_and_labels_into_df(
-        labels=df[labels], components=embedding
-    )
+    df_umap = bundle_components_and_labels_into_df(labels=df[labels], components=embedding)
 
     return df_umap, reducer
 
 
-def umap_transform(
-    df: pd.DataFrame, labels: str | list, embedding: UMAP
-) -> pd.DataFrame:
+def umap_transform(df: pd.DataFrame, labels: str | list, embedding: UMAP) -> pd.DataFrame:
     """Transforms new data points in the same UMAP space as that of the datapoints the embedding object was fitted with. Returns an easy to plot dataframe.
 
     Args:
@@ -281,9 +267,7 @@ def umap_transform(
     embedded_x = embedding.transform(x)
 
     # Bundle everything in a df
-    df_umap = bundle_components_and_labels_into_df(
-        labels=df[labels], components=embedded_x
-    )
+    df_umap = bundle_components_and_labels_into_df(labels=df[labels], components=embedded_x)
 
     return df_umap
 
@@ -326,9 +310,7 @@ def confidence_ellipse(x, y, n_std: float = 1.96, size: int = 100) -> str:
     ell_radius_x = np.sqrt(1 + pearson)
     ell_radius_y = np.sqrt(1 - pearson)
     theta = np.linspace(0, 2 * np.pi, size)
-    ellipse_coords = np.column_stack(
-        [ell_radius_x * np.cos(theta), ell_radius_y * np.sin(theta)]
-    )
+    ellipse_coords = np.column_stack([ell_radius_x * np.cos(theta), ell_radius_y * np.sin(theta)])
 
     # Calculate the scale (=size) and mean (offset) from the x and y coordinates.
     # the std. dev. of x from the sqrt of the variance and multiplying this with the n_std argument.
@@ -346,9 +328,7 @@ def confidence_ellipse(x, y, n_std: float = 1.96, size: int = 100) -> str:
         ]
     )
     scale_matrix = np.array([[x_scale, 0], [0, y_scale]])
-    ellipse_coords = (
-        ellipse_coords.dot(rotation_matrix).dot(scale_matrix) + translation_matrix
-    )
+    ellipse_coords = ellipse_coords.dot(rotation_matrix).dot(scale_matrix) + translation_matrix
 
     # Calc ellipse path which can be plotted with fig.add_shape(path=ellipse_path)
     ellipse_path = f"M {ellipse_coords[0, 0]}, {ellipse_coords[0, 1]}"
