@@ -6,6 +6,20 @@
 
 This repo stores the code and findings for the modeling task assigned to me for the job interview of AI Engineer for dEEGtal/Wyss Center.
 
+## How to run:
+1. Create python 3.12 environment (this code has been tested with 3.12.7)
+    - ```powershell python -m venv .venv
+2. Activate environment
+    - ```powershell venv\Scripts\activate
+3. Install requirements.txt
+    - ```powershell pip install -r requirements.txt
+4. Run notebook in /notebooks in order!
+    - 1_Exploratory_Data_Analysis.ipynb
+    - 2_1_Build_CNN_Model.ipynb
+    - 3_XAI.ipynb
+    - 4_(Experimental)_Build_XGBoost_Model.ipynb
+
+
 ## Project Organization
 
 ```
@@ -16,9 +30,7 @@ This repo stores the code and findings for the modeling task assigned to me for 
 │   ├── external       <- Data from third party sources.
 │   ├── interim        <- Intermediate data that has been transformed.
 │   ├── processed      <- The final, canonical data sets for modeling.
-│   └── raw            <- The original, immutable data dump.
-│
-├── docs               <- A default mkdocs project; see www.mkdocs.org for details
+│   └── raw            <- The original, immutable data dump. => Contains the dEEGtal coding task data
 │
 ├── models             <- Trained and serialized models, model predictions, or model summaries
 │
@@ -45,16 +57,9 @@ This repo stores the code and findings for the modeling task assigned to me for 
     │
     ├── config.py               <- Store useful variables and configuration
     │
-    ├── dataset.py              <- Scripts to download or generate data
+    ├── dimensionality_reduction.py  <- Package for easy dimensionality tooling. Written by Jeroen Buil
     │
-    ├── features.py             <- Code to create features for modeling
-    │
-    ├── modeling                
-    │   ├── __init__.py 
-    │   ├── predict.py          <- Code to run model inference with trained models          
-    │   └── train.py            <- Code to train models
-    │
-    └── plots.py                <- Code to create visualizations
+    └── model_architecture.py   <- Code to initialise a simple CNN network
 ```
 
 --------

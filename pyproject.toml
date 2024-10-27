@@ -4,7 +4,7 @@ build-backend = "flit_core.buildapi"
 
 [project]
 name = "deegtal_coding_task"
-version = "0.0.1"
+version = "1.0.0"
 description = "This repo stores the code and findings for the modeling task assigned to me for the job interview of AI Engineer for dEEGtal/Wyss Center."
 authors = [
   { name = "Jeroen Buil" },
