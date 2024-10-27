@@ -7,8 +7,8 @@ import plotly.express as px
 from openTSNE import TSNE
 from plotly import graph_objects as go
 from sklearn.decomposition import PCA
-from umap import UMAP
 
+# import umap
 # from sklearn.preprocessing import StandardScaler, MinMaxScaler
 
 
@@ -188,88 +188,88 @@ def pca_transform(df: pd.DataFrame, labels: str | list, embedding: PCA) -> pd.Da
     return df_pca
 
 
-######################################
-# UMAP
-######################################
-# MARK: UMAP
+# ######################################
+# # UMAP
+# ######################################
+# # MARK: UMAP
 
 
-def get_umap_df(
-    df: pd.DataFrame,
-    labels: str | list,
-    n_components: int = 2,
-    random_state: int = 42,
-    n_neighbours: int = 2,
-    min_dist: float = 0.1,
-    metric: str = "euclidean",
-) -> tuple[pd.DataFrame, UMAP]:
-    """Calculates UMAP and returns the data in a easy to plot dataframe
+# def get_umap_df(
+#     df: pd.DataFrame,
+#     labels: str | list,
+#     n_components: int = 2,
+#     random_state: int = 42,
+#     n_neighbours: int = 2,
+#     min_dist: float = 0.1,
+#     metric: str = "euclidean",
+# ) -> tuple[pd.DataFrame, UMAP]:
+#     """Calculates UMAP and returns the data in a easy to plot dataframe
 
-    Args:
-        df (pd.DataFrame): input dataframe that contains at least labels column listed in 'labels' and one or more numerical data columns
-        labels (str | list): labels(s) of the data points, these will be added to the UMAP space output.
-        n_components (int, optional): Number of components the UMAP should calculate+return. Defaults to 2.
-        random_state (int, optional): Random state of the tSNE calculation, fix this to generate consistent plots. Defaults to 42.
-        n_neighbours (int, optional): Controls how UMAP balances local versus global structure in the data. Defaults to 15
-        min_dist (float, optional): Controls how tightly UMAP is allowed to pack points together. Defaults to 0.1
-        metric (string, optional): Controls how distance is computed in the ambient space of the input data. Defaults to 'euclidean'
+#     Args:
+#         df (pd.DataFrame): input dataframe that contains at least labels column listed in 'labels' and one or more numerical data columns
+#         labels (str | list): labels(s) of the data points, these will be added to the UMAP space output.
+#         n_components (int, optional): Number of components the UMAP should calculate+return. Defaults to 2.
+#         random_state (int, optional): Random state of the tSNE calculation, fix this to generate consistent plots. Defaults to 42.
+#         n_neighbours (int, optional): Controls how UMAP balances local versus global structure in the data. Defaults to 15
+#         min_dist (float, optional): Controls how tightly UMAP is allowed to pack points together. Defaults to 0.1
+#         metric (string, optional): Controls how distance is computed in the ambient space of the input data. Defaults to 'euclidean'
 
-    Returns:
-        pd.DataFrame: UMAP components + additional labels(s) in a df that is seaborn/plotly plot proof
-        reducer: UMAP scikitlearn-like object that can be used to transform new data points
-    """
-    if n_components > 1:
-        if n_components % 1 != 0:  # must be round number
-            raise ValueError("n_components must be round number")
-        if n_components >= df.shape[0] - 1:
-            raise ValueError(
-                f"n_components can maximimally be n_samples-2. n_samples=={df.shape[0]}, so n_components needs to be <= {df.shape[0]-2}"
-            )
-    elif n_components < 1:  # must be greater than or equal to 1
-        raise ValueError("n_components must >= 1")
-    else:
-        pass
+#     Returns:
+#         pd.DataFrame: UMAP components + additional labels(s) in a df that is seaborn/plotly plot proof
+#         reducer: UMAP scikitlearn-like object that can be used to transform new data points
+#     """
+#     if n_components > 1:
+#         if n_components % 1 != 0:  # must be round number
+#             raise ValueError("n_components must be round number")
+#         if n_components >= df.shape[0] - 1:
+#             raise ValueError(
+#                 f"n_components can maximimally be n_samples-2. n_samples=={df.shape[0]}, so n_components needs to be <= {df.shape[0]-2}"
+#             )
+#     elif n_components < 1:  # must be greater than or equal to 1
+#         raise ValueError("n_components must >= 1")
+#     else:
+#         pass
 
-    # Get numerical data from input df
-    x = df.loc[:, ~df.columns.isin(labels)]
+#     # Get numerical data from input df
+#     x = df.loc[:, ~df.columns.isin(labels)]
 
-    # Calc PCA
-    reducer = UMAP(
-        n_components=n_components,
-        random_state=random_state,
-        n_neighbors=n_neighbours,
-        min_dist=min_dist,
-        metric=metric,
-    )
-    embedding = reducer.fit_transform(x)
+#     # Calc PCA
+#     reducer = UMAP(
+#         n_components=n_components,
+#         random_state=random_state,
+#         n_neighbors=n_neighbours,
+#         min_dist=min_dist,
+#         metric=metric,
+#     )
+#     embedding = reducer.fit_transform(x)
 
-    # Bundle everything in a df
-    df_umap = bundle_components_and_labels_into_df(labels=df[labels], components=embedding)
+#     # Bundle everything in a df
+#     df_umap = bundle_components_and_labels_into_df(labels=df[labels], components=embedding)
 
-    return df_umap, reducer
+#     return df_umap, reducer
 
 
-def umap_transform(df: pd.DataFrame, labels: str | list, embedding: UMAP) -> pd.DataFrame:
-    """Transforms new data points in the same UMAP space as that of the datapoints the embedding object was fitted with. Returns an easy to plot dataframe.
+# def umap_transform(df: pd.DataFrame, labels: str | list, embedding: UMAP) -> pd.DataFrame:
+#     """Transforms new data points in the same UMAP space as that of the datapoints the embedding object was fitted with. Returns an easy to plot dataframe.
 
-    Args:
-        df (pd.DataFrame): input dataframe with the same format as that is used to train the 'embedding' variable. (i.e. contains at least labels column listed in 'labels' and one or more numerical data columns)
-        labels (str | list): labels(s) of the data points, these will be added to the UMAP space output.
-        embedding (UMAP): already fitted UMAP embedding you wish to use to transform the new datapoints in df
+#     Args:
+#         df (pd.DataFrame): input dataframe with the same format as that is used to train the 'embedding' variable. (i.e. contains at least labels column listed in 'labels' and one or more numerical data columns)
+#         labels (str | list): labels(s) of the data points, these will be added to the UMAP space output.
+#         embedding (UMAP): already fitted UMAP embedding you wish to use to transform the new datapoints in df
 
-    Returns:
-        pd.DataFrame: UMAP components + additional labels(s) in a df that is seaborn/plotly plot proof
-    """
-    # Get numerical data from input df
-    x = df.loc[:, ~df.columns.isin(labels)]
+#     Returns:
+#         pd.DataFrame: UMAP components + additional labels(s) in a df that is seaborn/plotly plot proof
+#     """
+#     # Get numerical data from input df
+#     x = df.loc[:, ~df.columns.isin(labels)]
 
-    # transform data points
-    embedded_x = embedding.transform(x)
+#     # transform data points
+#     embedded_x = embedding.transform(x)
 
-    # Bundle everything in a df
-    df_umap = bundle_components_and_labels_into_df(labels=df[labels], components=embedded_x)
+#     # Bundle everything in a df
+#     df_umap = bundle_components_and_labels_into_df(labels=df[labels], components=embedded_x)
 
-    return df_umap
+#     return df_umap
 
 
 ######################################
